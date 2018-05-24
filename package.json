@@ -1,13 +1,17 @@
 {
-  "name": "ionic-demo",
+  "name": "testapp",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "ng": "npm run copy-ionic-angular && ng",
+    "serve": "npm run copy-ionic-angular && ng serve",
+    "serve.aot": "npm run copy-ionic-angular && ng serve --aot",
+    "build": "npm run copy-ionic-angular && ng build",
+    "build.aot": "npm run copy-ionic-angular && ng build --aot",
+    "build.prod": "npm run copy-ionic-angular && ng build --prod --aot",
+    "test": "npm run copy-ionic-angular && ng test",
+    "lint": "npm run copy-ionic-angular && ng lint",
+    "e2e": "npm run copy-ionic-angular && ng e2e",
+    "copy-ionic-angular": "node ../../scripts/link-copy.js ionic/angular/test/testapp"
   },
   "private": true,
   "dependencies": {
@@ -20,11 +24,10 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
+    "@ionic/angular": "^4.0.0-alpha.7",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26",
-    "@ionic/core": "^4.0.0-alpha.4",
-    "@ionic/angular": "^4.0.0-alpha.4"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.0",

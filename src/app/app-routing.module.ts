@@ -23,13 +23,13 @@ const routes: Routes = [
 
   { path: 'no-routing-nav', loadChildren: './no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
   { path: 'simple-nav', loadChildren: './simple-nav/simple-nav.module#SimpleNavModule' },
-  // { path: 'lazy-load-tabs', loadChildren: './lazy-load-tabs/tabs.module#TabsModule' },
+  { path: 'lazy-load-tabs', loadChildren: './lazy-load-tabs/tabs.module#TabsModule' },
   { path: 'simple-tabs', loadChildren: './simple-tabs/tabs.module#TabsModule' },
-  { path: 'static-tabs', loadChildren: './static-tabs/tabs.module#TabsModule' }
+  { path: 'static-tabs', loadChildren: './static-tabs/tabs.module#TabsModule' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true, useHash: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

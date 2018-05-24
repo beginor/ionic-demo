@@ -12,17 +12,17 @@ const routes: Routes = [
       {
         path: 'mustang',
         outlet: 'tab1',
-        loadChildren: 'app/lazy-load-tabs/mustang/mustang.module#MustangModule'
+        loadChildren: './mustang/mustang.module#MustangModule'
       },
       {
         path: 'camaro',
         outlet: 'tab2',
-        loadChildren: 'app/lazy-load-tabs/camaro/camaro.module#CamaroModule'
+        loadChildren: './camaro/camaro.module#CamaroModule'
       },
       {
         path: 'charger',
         outlet: 'tab3',
-        loadChildren: 'app/lazy-load-tabs/charger/charger.module#ChargerModule'
+        loadChildren: './charger/charger.module#ChargerModule'
       }
     ]
   },
