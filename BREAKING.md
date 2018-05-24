@@ -37,7 +37,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectively.
 
 **Old Usage Example:**
 
@@ -159,7 +159,7 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 | --------------------------- | ------------ | --------------------------- |
 | `small`, `large`            | `size`       | Sets the button size.       |
 | `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
-| `full`, `block`             | `expand`     | Sets the button width.      |
+| `full`, `block`             | `expand`     | Sets the button width.      |
 
 
 **Old Usage Example:**
