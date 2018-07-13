@@ -13,17 +13,20 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Dynamic Mode](#dynamic-mode)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
+- [Grid](#grid)
 - [Icon](#icon)
 - [Input](#Input)
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
 - [Item Sliding](#item-sliding)
+- [Label](#label)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
 - [Navbar](#navbar)
 - [Option](#option)
+- [Overlays](#overlays)
 - [Radio](#radio)
 - [Range](#range)
 - [Segment](#segment)
@@ -295,7 +298,7 @@ import { DateTime } from 'ionic-angular';
 **New Usage Example:**
 
 ```javascript
-import { Datetime } from 'ionic-angular';
+import { Datetime } from '@ionic/angular';
 ```
 
 
@@ -427,6 +430,21 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 </ion-content>
 ```
 
+## Grid
+
+### Markup Changed
+
+The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
+
+_In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns._
+
+- `col-{breakpoint}-{value}` attributes have been renamed to `size-{breakpoint}=“{value}”`
+- `offset-{breakpoint}-{value}` attributes have been renamed to `offset-{breakpoint}=“{value}”`
+- `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
+- `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
+
+Customizing the padding and width of a grid should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
+
 ## Icon
 
 ### Fonts Removed
@@ -446,10 +464,13 @@ If any `CSS` is being overridden for an icon it will need to change to override 
 **New Usage Example:**
 
 ```css
-.icon {
+ion-icon {
   fill: #000;
 }
 ```
+
+_Note: we are no longer adding the `icon` class to an `ion-icon`, so the element should be targeted instead._
+
 
 ### Property Removed
 
@@ -665,6 +686,47 @@ The option component should not be written as a `button` with an `ion-button` di
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
 
 
+## Label
+
+### Attributes Renamed
+
+The attributes to set label position for input are now combined under the `position` attribute:
+
+| Old Property | New Property         | Property Behavior                                                            |
+|--------------|----------------------|------------------------------------------------------------------------------|
+| fixed        | `position="fixed"`   | A persistent label that sits next the input.                                 |
+| floating     | `position="floating"`| A label that will float above the input if the input is empty or loses focus.|
+| stacked      | `position="stacked"` | A stacked label will always appear on top of the input.                      |
+
+**Old Usage Example:**
+
+```html
+<ion-item>
+  <ion-label floating>Floating Label</ion-label>
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label fixed>Fixed Label</ion-label>
+  <!-- input -->
+</ion-item>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item>
+  <ion-label position="floating">Floating Label</ion-label>
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label position="fixed">Fixed Label</ion-label>
+  <!-- input -->
+</ion-item>
+```
+
+
 ## List Header
 
 ### Label Required
@@ -765,6 +827,40 @@ Select's option element should now be written as `<ion-select-option>`. This mak
 ### Class Changed
 
 The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
+
+## Overlays
+
+### Markup Changed
+
+Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
+
+**Old Usage Example:**
+
+```javascript
+presentPopover(ev: any) {
+  const popover = this.popoverController.create({
+    component: PopoverComponent,
+    ev: event,
+    translucent: true
+  });
+  popover.present();
+}
+```
+
+**New Usage Example:**
+
+```javascript
+async presentPopover(ev: any) {
+  const popover = await this.popoverController.create({
+    component: PopoverComponent,
+    ev: event,
+    translucent: true
+  });
+  return await popover.present();
+}
+```
+
+
 
 ## Radio
 
@@ -961,19 +1057,55 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 ## Tabs
 
-Some properties in `ion-tab` changed:
+### Attributes Renamed
 
-- [tabTitle] -> [label]
-- [tabIcon] -> [icon]
-- [tabBadge] -> [badge]
-- [tabBadgeStyle] -> [badgeStyle]
+#### `ion-tabs`
+
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been renamed.
+
+| Old Property        | New Property         | Notes                                           |
+|---------------------|----------------------|-------------------------------------------------|
+| `tabsHighlight`     | `tabbarHighlight`    |                                                 |
+| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `label-hide`  |
+| `tabsPlacement`     | `tabbarPlacement`    |                                                 |
+| `hidden`            | `tabbarHidden`       |                                                 |
+
+**Old Usage Example:**
+
+```html
+<ion-tabs tabsLayout="icon-top" tabsPlacement="bottom" tabsHighlight="true" hidden>
+  ...
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs tabbarLayout="icon-top" tabbarPlacement="bottom" tabbarHighlight="true" tabbarHidden>
+  ...
+</ion-tabs>
+```
+
+
+#### `ion-tab`
+
+The attributes for the tab title, icon, and badge customization have been renamed.
+
+| Old Property        | New Property         |
+|---------------------|----------------------|
+| `tabTitle`          | `label`              |
+| `tabIcon`           | `icon`               |
+| `tabBadge`          | `badge`              |
+| `tabBadgeStyle`     | `badgeColor`         |
+| `enabled`           | `disabled`           |
+| `tabUrlPath`        | `href`               |
 
 **Old Usage Example:**
 
 ```html
 <ion-tabs>
   <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
-  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="map" tabBadge="2" tabBadgeStyle="danger" enabled="false"></ion-tab>
 </ion-tabs>
 ```
 
@@ -982,7 +1114,7 @@ Some properties in `ion-tab` changed:
 ```html
 <ion-tabs>
   <ion-tab label="Schedule" icon="add"></ion-tab>
-  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+  <ion-tab label="Map" icon="map" badge="2" badgeColor="danger" disabled="true"></ion-tab>
 </ion-tabs>
 ```
 
