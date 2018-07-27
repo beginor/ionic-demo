@@ -1,7 +1,20 @@
 
 # Breaking Changes
 
-A list of the breaking changes introduced in Ionic Angular v4.
+## Migrating
+
+### Migration Guide
+
+If you aren't sure where to start in upgrading to v4, we recommend reading through our [migration guide](https://beta.ionicframework.com/docs/building/migration) first.
+
+### Migration Linter
+
+Looking for a tool that automatically warns (and sometimes fixes) the breaking changes listed? Check out our [migration linter](https://github.com/ionic-team/v4-migration-tslint)!
+
+
+## Components
+
+A list of the breaking changes introduced to each component in Ionic Angular v4.
 
 - [Action Sheet](#action-sheet)
 - [Alert](#alert)
@@ -15,7 +28,6 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Fixed Content](#fixed-content)
 - [Grid](#grid)
 - [Icon](#icon)
-- [Input](#Input)
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
@@ -23,6 +35,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Label](#label)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
+- [Modal](#modal)
 - [Nav](#nav)
 - [Navbar](#navbar)
 - [Option](#option)
@@ -162,7 +175,7 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 | --------------------------- | ------------ | --------------------------- |
 | `small`, `large`            | `size`       | Sets the button size.       |
 | `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
-| `full`, `block`             | `expand`     | Sets the button width.      |
+| `full`, `block`             | `expand`     | Sets the button width.      |
 
 
 **Old Usage Example:**
@@ -476,22 +489,6 @@ _Note: we are no longer adding the `icon` class to an `ion-icon`, so the element
 
 The `isActive` property has been removed. It only worked for `ios` icons previously. If you would like to switch between an outline and solid icon you should set it in the `name`, or `ios`/`md` attribute and then change it when needed.
 
-## Input
-
-The Sass variables were all renamed from having `$text-input` as the prefix to `$input`.
-
-**Old Usage Example:**
-
-```css
-$text-input-highlight-color-valid:       #32db64;
-```
-
-**New Usage Example:**
-
-```css
-$input-highlight-color-valid:       #32db64;
-```
-
 
 ## Item
 
@@ -763,6 +760,57 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
 </ion-menu-toggle>
 ```
 
+## Modal
+
+### Arguments Changed
+
+The component is no longer the first argument in the `create` method. Instead, a single argument of type `ModalOptions` is passed in with a `component` property and the value is the component as part of the passed object.
+
+**Old Usage Example:**
+
+```javascript
+import { Component } from '@angular/core';
+import { ModalController } from 'ionic-angular';
+
+import { ModalPage } from './modal-page';
+
+@Component({
+  ...
+})
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  presentModal() {
+    const modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+  }
+}
+```
+
+**New Usage Example:**
+
+```javascript
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { ModalPage } from './modal-page';
+
+@Component({
+  ...
+})
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  async presentModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalPage
+    });
+    return await modal.present();
+  }
+}
+```
 
 ## Nav
 
@@ -1168,6 +1216,21 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
 
 ## Theming
 
+### CSS Utilities
+
+#### Padding
+
+Previously to add padding to the left and right side of elements, the `padding-left` and `padding-right` attributes, respectively, would be added to the element.
+
+These attributes have been renamed to `padding-start` and `padding-end` to better align with our support for RTL.
+
+#### Margin
+
+Previously to add margin to the left and right side of elements, the `margin-left` and `margin-right` attributes, respectively, would be added to the element.
+
+These attributes have been removed in favor of using the `margin-start` and `margin-end` attributes to better align with our support for RTL.
+
+
 ### Including Sass
 
 Previously all `scss` files in the `src` directory were imported. Now each `scss` file should be included for the component via Angular's `styleUrls` metadata. View [Angular's Component Styles](https://angular.io/guide/component-styles) for more information.
@@ -1195,21 +1258,9 @@ p {
 
 ### Sass Variables
 
-Sass variables for changing the cordova statusbar have been renamed to app:
+Sass variables should no longer be used to change Ionic components. We have built Ionic to be customizable using CSS variables, instead.
 
-**Old Usage Example:**
-
-```css
-$cordova-ios-statusbar-padding:   20px;
-$cordova-md-statusbar-padding:    20px;
-```
-
-**New Usage Example:**
-
-```css
-$app-ios-statusbar-padding:   20px;
-$app-md-statusbar-padding:    20px;
-```
+For more information on theming, check out the [theming documentation](https://beta.ionicframework.com/docs/theming/basics).
 
 
 ## Toolbar
